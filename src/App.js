@@ -25,7 +25,7 @@ const listCoins = `
 function CoinsList({ limit = 10 }) {
   return (
     <Query query={listCoins} variables={{ limit: parseInt(limit) }}>
-      {({ fetching, data, error }) => {
+      {({ fetching, data, error, executeQuery }) => {
         if (fetching) {
           return "Loading...";
         } else if (error) {
@@ -33,14 +33,21 @@ function CoinsList({ limit = 10 }) {
         }
 
         return (
-          <div className="card-container">
-            {data.allCoins.map((c) => (
-              <div className="card" key={c.id}>
-                <div className="name">{c.name}</div>
-                <div className="price">{c.price}</div>
-                <div className="symbol">{c.symbol}</div>
-              </div>
-            ))} 
+          <div>
+            <div className="card-container">
+              {data.allCoins.map((c) => (
+                <div className="card" key={c.id}>
+                  <div className="name">{c.name}</div>
+                  <div className="price">{c.price}</div>
+                  <div className="symbol">{c.symbol}</div>
+                </div>
+              ))} 
+            </div>
+            <div>
+              <button onClick={() => executeQuery({ requestPolicy: "network-only" })}>
+                Refresh
+              </button>
+            </div>
           </div>
         );
       }}
