@@ -1,6 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+
+import { Provider, createClient } from 'urql';
+
+const client = createClient({
+  url: 'https://api.graph.cool/simple/v1/cjxjga8d15hyw0127luhbm9eh',
+});
+
+const AppWithProvider = () => (
+  <Provider value={client}>
+    <App/>
+  </Provider>
+);
 
 function App() {
 
@@ -13,4 +24,4 @@ function App() {
   );
 }
 
-export default App;
+export default AppWithProvider;
